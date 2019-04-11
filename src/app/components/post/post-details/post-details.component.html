@@ -1,0 +1,25 @@
+<section id="viewComments">
+  <ng-template [ngIf]="post">
+    <app-post-info>
+      [post] = "post";
+    </app-post-info>
+  </ng-template>
+  <div class="post post-content">
+    <form #f="ngForm" (ngSubmit)="postComment()" id="commentForm">
+      <label>Comment</label>
+      <textarea required ngModel name="content" type="text"></textarea>
+      <input type="submit" [disabled]="f.invalid" value="Add Comment" id="btnPostComment">
+    </form>
+  </div>
+  <ng-template [ngIf]="comments">
+    <article *ngFor="let commentInfo of comments" class="post post-content">
+      <p>{{commentInfo['content']}}</p>
+      <div class="info">
+        submitted by {{commentInfo['author']}} |
+        <button *ngIf="isAuthor(commentInfo)" (click)="deleteComment(commentInfo['_id'])" class="deleteLink">
+          delete
+        </button>
+      </div>
+    </article>
+  </ng-template>
+</section>
